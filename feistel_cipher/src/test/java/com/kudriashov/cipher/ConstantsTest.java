@@ -7,11 +7,23 @@ import static junit.framework.TestCase.assertEquals;
 public class ConstantsTest {
 
     @Test
-    public void sBoxes() {
+    public void sBoxInvSBox() {
         for (int i = 0; i < 0x10; i++) {
             for (int j = 0; j < 0x10; j++) {
                 int tmp = Constants.S_BOX[i][j];
                 int tmpInv = Constants.INV_S_BOX[tmp & 0b1111][tmp >> 4];
+                assertEquals(i, tmpInv & 0b1111);
+                assertEquals(j, tmpInv >> 4);
+            }
+        }
+    }
+
+    @Test
+    public void invSBoxSBox() {
+        for (int i = 0; i < 0x10; i++) {
+            for (int j = 0; j < 0x10; j++) {
+                int tmp = Constants.INV_S_BOX[i][j];
+                int tmpInv = Constants.S_BOX[tmp & 0b1111][tmp >> 4];
                 assertEquals(i, tmpInv & 0b1111);
                 assertEquals(j, tmpInv >> 4);
             }

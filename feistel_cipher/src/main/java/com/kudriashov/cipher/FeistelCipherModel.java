@@ -37,26 +37,50 @@ public class FeistelCipherModel implements Cipher {
     }
 
     private int[] encryptRound(int left, int right, int roundKey) {
-        //System.out.println("Start " + Integer.toHexString(left) + " " + Integer.toHexString(right) + " " + Integer.toHexString(roundKey));
+        if (Constants.DEBUG) {
+            System.out.println(
+                    "Start 0x" + Integer.toHexString(left) + " 0x" + Integer
+                            .toHexString(right) + " 0x" + Integer
+                            .toHexString(roundKey));
+        }
         int f = right ^ roundKey;
-        f = Constants.SYM_S_BOX[f % (Constants.BLOCK / 4)][f / binpow(2, Constants.BLOCK / 4)];
+        f = Constants.S_BOX[f % (Constants.BLOCK / 4)][f / binpow(2,
+                Constants.BLOCK / 4)];
         left = left ^ f;
-        //System.out.println("End " + Integer.toHexString(right) + " " + Integer.toHexString(left) + " " + Integer.toHexString(roundKey));
-        return new int[]{right, left};
+        if (Constants.DEBUG) {
+            System.out.println(
+                    "End   0x" + Integer.toHexString(left) + " 0x" + Integer
+                            .toHexString(right) + " 0x" + Integer
+                            .toHexString(roundKey));
+        }
+        return new int[] { right, left };
     }
 
     private int[] decryptRound(int left, int right, int roundKey) {
-        //System.out.println("Start " + Integer.toHexString(left) + " " + Integer.toHexString(right) + " " + Integer.toHexString(roundKey));
+        if (Constants.DEBUG) {
+            System.out.println(
+                    "Start 0x" + Integer.toHexString(left) + " 0x" + Integer
+                            .toHexString(right) + " 0x" + Integer
+                            .toHexString(roundKey));
+        }
         int f = (left ^ roundKey);
-        f = Constants.SYM_S_BOX[f % (Constants.BLOCK / 4)][f / binpow(2, Constants.BLOCK / 4)];
+        f = Constants.S_BOX[f % (Constants.BLOCK / 4)][f / binpow(2,
+                Constants.BLOCK / 4)];
         right = (right ^ f);
-        //System.out.println("End " + Integer.toHexString(right) + " " + Integer.toHexString(left) + " " + Integer.toHexString(roundKey));
-        return new int[]{left, right};
+        if (Constants.DEBUG) {
+            System.out.println(
+                    "End   0x" + Integer.toHexString(left) + " 0x" + Integer
+                            .toHexString(right) + " 0x" + Integer
+                            .toHexString(roundKey));
+        }
+        return new int[] { left, right };
     }
 
     private int roundKey(int nRound, int key) {
         int shift = binpow(2, nRound);
-        return (key / shift + (key % shift) * binpow(2, Constants.DEFAULT_ROUNDS)) % binpow(2, Constants.DEFAULT_ROUNDS / 2);
+        return ((key / shift + (key % shift) * binpow(2,
+                Constants.DEFAULT_ROUNDS - shift))
+                / binpow(2, 4)) % binpow(2, 8);
     }
 
     private int binpow(int x, int pow) {

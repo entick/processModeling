@@ -1,5 +1,6 @@
 package com.kudriashov.cipher;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -9,6 +10,11 @@ public class FeistalCipherTest {
     private static int POW_2_16 = 0b10000000000000000;
 
     Cipher cipher;
+
+    @Before
+    public void setUp() {
+        Constants.DEBUG = false;
+    }
 
     @Test
     public void decryptEqualsPlaintext() {
