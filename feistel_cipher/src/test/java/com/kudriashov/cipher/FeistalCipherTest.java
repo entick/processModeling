@@ -21,7 +21,6 @@ public class FeistalCipherTest {
         cipher = new FeistelCipher();
         for (int i = 0; i < POW_2_16; i++) {
             int encrypted = cipher.encrypt(i, Constants.DEFAULT_KEY);
-            //System.out.println("-------------------------------------------------");
             int decrypted = cipher.decrypt(encrypted, Constants.DEFAULT_KEY);
             assertEquals(i, decrypted);
         }
@@ -33,7 +32,6 @@ public class FeistalCipherTest {
         cipher = new FeistelCipherModel();
         for (int i = 0; i < POW_2_16; i++) {
             int encrypted = cipher.encrypt(i, Constants.DEFAULT_KEY);
-            //System.out.println("------------------------------------------------------");
             int decrypted = cipher.decrypt(encrypted, Constants.DEFAULT_KEY);
             assertEquals(i, decrypted);
         }

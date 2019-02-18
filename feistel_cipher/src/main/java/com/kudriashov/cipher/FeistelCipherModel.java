@@ -44,8 +44,8 @@ public class FeistelCipherModel implements Cipher {
                             .toHexString(roundKey));
         }
         int f = right ^ roundKey;
-        f = Constants.S_BOX[f % (Constants.BLOCK / 4)][f / binpow(2,
-                Constants.BLOCK / 4)];
+        f = Constants.S_BOX[f % (Byte.SIZE / 2)][f / binpow(2,
+                (Byte.SIZE / 2))];
         left = left ^ f;
         if (Constants.DEBUG) {
             System.out.println(
@@ -64,8 +64,7 @@ public class FeistelCipherModel implements Cipher {
                             .toHexString(roundKey));
         }
         int f = (left ^ roundKey);
-        f = Constants.S_BOX[f % (Constants.BLOCK / 4)][f / binpow(2,
-                Constants.BLOCK / 4)];
+        f = Constants.S_BOX[f % (Byte.SIZE / 2)][f / binpow(2, Byte.SIZE / 2)];
         right = (right ^ f);
         if (Constants.DEBUG) {
             System.out.println(
@@ -79,8 +78,8 @@ public class FeistelCipherModel implements Cipher {
     private int roundKey(int nRound, int key) {
         int shift = binpow(2, nRound);
         return ((key / shift + (key % shift) * binpow(2,
-                Constants.DEFAULT_ROUNDS - shift))
-                / binpow(2, 4)) % binpow(2, 8);
+                Constants.DEFAULT_ROUNDS - shift)) / binpow(2, 4)) % binpow(2,
+                8);
     }
 
     private int binpow(int x, int pow) {

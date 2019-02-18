@@ -41,7 +41,7 @@ public class FeistelCipher implements Cipher {
                             .toHexString(roundKey));
         }
         int f = right ^ roundKey;
-        f = Constants.S_BOX[f & 0b1111][f >> (Constants.BLOCK / 4)];
+        f = Constants.S_BOX[f & 0b1111][f >> (Byte.SIZE / 2)];
         left = left ^ f;
         if (Constants.DEBUG) {
             System.out.println(
@@ -60,7 +60,7 @@ public class FeistelCipher implements Cipher {
                             .toHexString(roundKey));
         }
         int f = (left ^ roundKey);
-        f = Constants.S_BOX[f & 0b1111][f >> (Constants.BLOCK / 4)];
+        f = Constants.S_BOX[f & 0b1111][f >> (Byte.SIZE / 2)];
         right = (right ^ f);
         if (Constants.DEBUG) {
             System.out.println(
