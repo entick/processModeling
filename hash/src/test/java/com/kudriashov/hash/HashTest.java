@@ -1,4 +1,4 @@
-package com.kudriashov;
+package com.kudriashov.hash;
 
 import com.kudriashov.hash.Hash;
 import com.kudriashov.hash.HashImpl;
